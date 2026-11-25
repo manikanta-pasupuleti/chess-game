@@ -1,51 +1,72 @@
 # Console Chess
 
-A dependency-free two-player chess game written in Java. It runs in a terminal and supports legal movement, check/checkmate, stalemate, castling, en passant, promotion, move history, and undo.
+A dependency-free, two-player chess game implemented in Java. Play locally in a terminal or use the browser-based interface.
+
+## Features
+
+- Legal move validation, check, checkmate, and stalemate
+- Castling, en passant, and pawn promotion
+- Move history and undo
+- Terminal and browser interfaces
+- Java standard library only; no application dependencies
 
 ## Requirements
 
-- Java 17 or newer
-- Maven 3.8 or newer (optional)
+- Java 17 or later
+- Maven 3.8 or later for Maven commands
 
-## Run with Maven
+## Play in the terminal
 
-```text
+From the project directory, run:
+
+```shell
 mvn compile exec:java
 ```
 
-## Run the web version
+Enter moves as `e2 e4` or `e2-e4`. Add a promotion piece when needed, for example `e7 e8 Q`. Use `help` to display the command format, `undo` to take back the previous move, and `quit` to exit.
 
-Start the browser-based two-player game with Maven:
+White pieces are uppercase; Black pieces are lowercase.
 
-```text
-mvn compile exec:java -Dexec.mainClass=com.example.chess.ChessWebServer
-```
+### Run without Maven
 
-Open `http://localhost:8080`. The web game uses one shared board for all visitors.
-
-## Run with `javac`
-
-```text
+```shell
 javac -d out src/main/java/com/example/chess/ChessGame.java
 java -cp out com.example.chess.ChessGame
 ```
 
-## Commands
+## Play in a browser
 
-- Enter moves as `e2 e4` or `e2-e4`.
-- Promote with `e7 e8 Q`, using `Q`, `R`, `B`, or `N`.
-- `undo` takes back the last move.
-- `help` shows the command format.
-- `quit` exits the game.
+Start the web server:
 
-Uppercase pieces are White and lowercase pieces are Black.
+```shell
+mvn compile exec:java -Dexec.mainClass=com.example.chess.ChessWebServer
+```
+
+Open [http://localhost:8080](http://localhost:8080). Select a piece and then a highlighted square to move. The browser game provides **one shared board for all visitors**; anyone who can access it can move pieces, undo, or start a new game.
 
 ## Deploy to Render
 
-The repository includes a `Dockerfile` for deploying the web version as a Render Web Service:
+The repository includes a [Dockerfile](./Dockerfile) for deploying the web version as a Render Web Service:
 
-1. Push the project to GitHub and connect the repository in Render using **New > Web Service**.
-2. Select the `main` branch, choose **Docker** as the runtime, and select the **Free** instance type.
-3. Create the service. Render builds the Docker image and provides a public URL when deployment succeeds.
+1. Push the project to GitHub and sign in to [Render](https://render.com/).
+2. Select **New > Web Service**, connect this repository, and choose the `main` branch.
+3. Select **Docker** as the runtime and choose an instance plan.
+4. Create the service. Render builds the image and provides a public URL when deployment succeeds.
 
-The service listens on Render's `PORT` environment variable. Free services can spin down when idle.
+The server listens on the `PORT` environment variable provided by Render. Free services may spin down when idle. The game state is stored in memory, so a service restart resets the board.
+
+## Project layout
+
+```text
+.
+├── Dockerfile
+├── pom.xml
+├── src
+│   └── main
+│       ├── java/com/example/chess
+│       │   ├── ChessGame.java
+│       │   └── ChessWebServer.java
+│       └── resources/web/index.html
+├── HOW_IT_WORKS.md
+└── README.md
+```
