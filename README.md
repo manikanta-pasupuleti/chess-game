@@ -2,6 +2,8 @@
 
 A dependency-free, two-player chess game implemented in Java. Play locally in a terminal or use the browser-based interface.
 
+**Live demo:** [Play Console Chess](https://chess-game-s2rr.onrender.com)
+
 ## Features
 
 - Legal move validation, check, checkmate, and stalemate
