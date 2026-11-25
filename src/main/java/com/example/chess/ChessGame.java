@@ -178,6 +178,14 @@ public final class ChessGame {
             System.out.println();
         }
 
+        String position() {
+            return new String(squares);
+        }
+
+        Color turn() {
+            return turn;
+        }
+
         List<Move> legalMoves(Color side) {
             List<Move> moves = pseudoMoves(side, true);
             List<Move> legal = new ArrayList<>();
