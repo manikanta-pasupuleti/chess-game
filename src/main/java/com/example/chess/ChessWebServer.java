@@ -118,7 +118,7 @@ public final class ChessWebServer {
 
             StringBuilder json = new StringBuilder(2048);
             json.append("{\"board\":\"").append(board.position())
-                    .append("\",\"turn\":\"").append(board.turn())
+                    .append("\",\"turn\":\"").append(board.turn().name())
                     .append("\",\"inCheck\":").append(inCheck)
                     .append(",\"finished\":").append(legalMoves.isEmpty())
                     .append(",\"result\":\"").append(jsonEscape(result))
